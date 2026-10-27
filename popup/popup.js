@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const providerSelect = document.getElementById('providerSelect');
   const modelSelect = document.getElementById('modelSelect');
   const customModelInput = document.getElementById('customModelInput');
+  const baseUrlGroup = document.getElementById('baseUrlGroup');
+  const baseUrlInput = document.getElementById('baseUrlInput');
   const apiKeyInput = document.getElementById('apiKeyInput');
   const btnToggleKey = document.getElementById('btnToggleKey');
   const autoFillSwitch = document.getElementById('autoFillSwitch');
@@ -35,9 +37,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   const currentConfig = await getConfig();
 
   // 填充厂商与对应模型
-  function updateModelOptions(providerId, selectedModel = '') {
+  function updateModelOptions(providerId, selectedModel = '', customBaseUrl = '') {
     const preset = PROVIDER_PRESETS[providerId];
     modelSelect.innerHTML = '';
+
+    // 仅当选择了 Custom (自定义) 时，才显示 Base URL 输入框；其他预设厂商直接隐藏
+    if (providerId === 'custom') {
+      baseUrlGroup.classList.remove('hidden');
+      baseUrlInput.value = customBaseUrl || currentConfig.baseUrl || 'https://api.openai.com/v1';
+    } else {
+      baseUrlGroup.classList.add('hidden');
+      baseUrlInput.value = preset?.baseUrl || '';
+    }
 
     if (preset && preset.models && preset.models.length > 0) {
       customModelInput.classList.add('hidden');
@@ -82,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 渲染已有配置
   providerSelect.value = currentConfig.provider || 'deepseek';
-  updateModelOptions(providerSelect.value, currentConfig.model);
+  updateModelOptions(providerSelect.value, currentConfig.model, currentConfig.baseUrl);
   apiKeyInput.value = currentConfig.apiKey || '';
   autoFillSwitch.checked = Boolean(currentConfig.autoFill);
   includeAnalysisSwitch.checked = currentConfig.includeAnalysis !== false;
@@ -145,11 +156,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 获取当前选中的 Base URL
   function getSelectedBaseUrl() {
-    const preset = PROVIDER_PRESETS[providerSelect.value];
+    const pId = providerSelect.value;
+    if (pId === 'custom') {
+      return baseUrlInput.value.trim();
+    }
+    const preset = PROVIDER_PRESETS[pId];
     if (preset && preset.baseUrl) {
       return preset.baseUrl;
     }
-    return currentConfig.baseUrl || '';
+    return baseUrlInput.value.trim() || currentConfig.baseUrl || '';
   }
 
   // 测试连接
@@ -191,11 +206,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const apiKey = apiKeyInput.value.trim();
     const autoFill = autoFillSwitch.checked;
     const includeAnalysis = includeAnalysisSwitch.checked;
-    const preset = PROVIDER_PRESETS[pId];
+    const baseUrl = getSelectedBaseUrl();
+
+    if (!baseUrl) {
+      showAlert('请填写有效的 API Base URL', 'error');
+      return;
+    }
 
     const newConfig = {
       provider: pId,
-      baseUrl: preset?.baseUrl || currentConfig.baseUrl,
+      baseUrl,
       apiKey,
       model,
       autoFill,

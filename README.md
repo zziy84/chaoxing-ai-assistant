@@ -5,16 +5,16 @@
 </p>
 
 <p align="center">
-  <b>🔥 真正 100% 永久免费开源 · 拒绝收费中转 · 独创极简省引擎 · 秒级极速响应</b><br/>
+  <b>🔥 真正 100% 永久免费开源 · 拒绝收费中转 · 独创极简省 75%+ Token 引擎 · 秒级极速响应</b><br/>
   专为超星学习通作业、自测与单元测验打造的现代化 Chrome 浏览器智能辅助扩展
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/免费开源-100%25-brightgreen.svg" alt="Free" />
+  <a href="https://github.com/zziy84/chaoxing-ai-assistant"><img src="https://img.shields.io/badge/免费开源-100%25-brightgreen.svg" alt="Free" /></a>
   <img src="https://img.shields.io/badge/Token节省-75%25%2B-blue.svg" alt="Token Saving" />
   <img src="https://img.shields.io/badge/Manifest-V3-success.svg" alt="Manifest V3" />
   <img src="https://img.shields.io/badge/Browser-Google%20Chrome-informational.svg" alt="Google Chrome" />
-  <img src="https://img.shields.io/badge/License-MIT-orange.svg" alt="License" />
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-orange.svg" alt="License" /></a>
 </p>
 
 ---
@@ -22,7 +22,7 @@
 ## 💡 为什么选择本项目？三大核心杀手锏
 
 ### 1. 🎁 真正 100% 永久免费开源，拒绝一切收费割韭菜套路
-- **拒绝按次收费 / 拒绝高价第三方中转**：市面上大量脚本以“按月订阅”、“答题卡充值”等形式收费。
+- **拒绝按次收费 / 拒绝高价第三方中转**：市面上大量脚本以“按月订阅”、“答题卡充值”等形式隐形收费。
 - **直连各大模型官方**：本项目完全开源无加密，前端直接向官方模型服务商（SiliconFlow 硅基流动、DeepSeek、阿里云通义千问等）发送请求。
 - **零成本完全白嫖**：搭配各大服务商赠送的数百万至数千万免费 Token 额度，**一分钱不用花**即可长久使用！
 - **个人隐私安全**：您的 API Key 只保存在您本地 Chrome 浏览器的安全存储中，绝不经由任何第三方中间服务器。
@@ -41,9 +41,9 @@
 
 ## 🖥️ Google Chrome 浏览器完整使用教程（从零到上手）
 
-### 第一步：获取与准备插件文件
+### 第一步：获取与解压项目
 
-1. 在本 GitHub 仓库页面右上角点击绿色按钮 **【Code】** -> 点击 **【Download ZIP】** 下载压缩包。
+1. 在本 GitHub 仓库页面右上角点击绿色按钮 **【Code】** -> 点击 **【Download ZIP】** 下载源码压缩包（或者在 Releases 页面直接下载打包好的版本）。
 2. 将下载的 ZIP 压缩包解压到您电脑上的任意文件夹（例如解压到 `D:\chaoxing-ai-assistant`）。
 
 ---
@@ -62,22 +62,29 @@
 
 ---
 
-### 第三步：配置大模型（以免费领额度的 SiliconFlow 为例）
+### 第三步：配置大模型 API（以最推荐的 2 种免费方案为例）
 
-插件支持任意兼容 OpenAI 格式的大模型，这里推荐 **零成本完全免费** 的方案：
+插件支持任意兼容 OpenAI 格式的大模型。点击浏览器右上角插件图标即可打开配置面板：
 
-1. **领取免费 API Key**：
-   - 前往 [硅基流动 SiliconFlow 官网](https://siliconflow.cn/) 注册账号（新用户一般直接赠送 14~20 元额度，足够个人刷上万道题）。
-   - 进入后台控制台，点击左侧 **【API 密钥】** -> 点击 **【创建新 API 密钥】** 并点击复制（格式形如 `sk-xxxxxxxx`）。
-2. **在 Chrome 中完成配置**：
-   - 点击 Chrome 浏览器右上角拼图图标，找到并点击 **学习通 AI 助手** 图标，打开配置面板（或右键图标选择“选项”）。
-   - **服务商预设**：下拉选择 `SiliconFlow (硅基流动)`。
-   - **模型**：推荐选择 `deepseek-ai/DeepSeek-V3` 或 `deepseek-ai/DeepSeek-R1`。
-   - **API Key**：粘贴刚才复制的 `sk-...` 密钥。
-   - 点击 **【⚡ 测试连接】**，稍等片刻弹出“连接成功 (延时: xxxms)”提示。
-   - 点击 **【💾 保存配置】**。
+#### 方案 A：首选推荐 —— 硅基流动 SiliconFlow（免费赠送海量 Token，支持 DeepSeek）
+1. 访问 [硅基流动官网](https://siliconflow.cn/) 注册账号（新用户一般直接赠送 14~20 元额度，足够刷上万道题）。
+2. 进入后台控制台，点击左侧 **【API 密钥】** -> **【创建新 API 密钥】** 并复制（格式形如 `sk-...`）。
+3. 在 Chrome 插件弹窗中：
+   - **大模型服务商**：选择 `SiliconFlow (硅基流动)`
+   - **模型版本**：推荐选择 `deepseek-ai/DeepSeek-V3` 或 `deepseek-ai/DeepSeek-R1`
+   - **API Key**：粘贴刚才复制的 Key
+   - 点击 **【⚡ 测试连接】** -> 提示连接成功后，点击 **【💾 保存配置】**。
 
-> 💡 **其它服务商支持**：您也可以选择 DeepSeek 官方开放平台、阿里云百炼通义千问、Kimi，或者使用电脑本地部署的无网络限制的 `Ollama`（模型填 `qwen2.5` 等）。
+#### 方案 B：使用任意第三方中转 / 自定义接口 (Custom)
+1. 在插件弹窗中：
+   - **大模型服务商**：下拉选择 **`Custom (自定义兼容 API)`**。
+   - 此时面板会**自动展开【API 接口地址 (Base URL)】**输入框。
+   - 填入您的接口中转地址（例如 `https://api.openai.com/v1` 或 `https://your-api-proxy.com/v1`）。
+   - **模型版本**：输入对应的模型名（如 `gpt-4o-mini`、`deepseek-chat`）。
+   - **API Key**：填入对应的访问密钥。
+   - 点击 **【⚡ 测试连接】** 并 **【💾 保存配置】**。
+
+> 💡 **更多官方服务商支持**：还内置了 **DeepSeek 官方平台**、**阿里云通义千问 (DashScope)**、**Moonshot (Kimi)** 以及 **本地离线免 Token 费用的 Ollama** 预设，一键即用。
 
 ---
 
@@ -90,6 +97,27 @@
    - **单题解析**：点击对应题目卡片上的 **【🚀 解析此题】**，AI 将秒级给出推荐答案。
    - **一键全解**：点击顶部 **【⚡ 一键解析全部】**，插件将自动逐题请求大模型并生成答案。
    - **辅助填入**：点击卡片上的 **【✍️ 辅助填入】**（或直接开启顶部的 **“自动填选”** 开关），插件将以自然拟人速度自动帮您选中选项并同步至学习通答题卡。
+
+---
+
+## ❓ 常见问题排查 (FAQ)
+
+<details>
+<summary><b>Q1: 为什么点击“开始答题”或没有看到右下角的 AI 悬浮胶囊？</b></summary>
+请检查是否是在作业/自测的具体作答页面。超星系统部分页面嵌套了 iframe，如果未自动弹出，只需按键盘 <code>F5</code> 刷新一次网页即可正常唤醒悬浮球。
+</details>
+
+<details>
+<summary><b>Q2: 测试连接提示“连接超时”或无响应？</b></summary>
+1. 检查 API Key 是否复制完整，有无前后空格；<br/>
+2. 如果是自定义 Base URL，请确认末尾是否包含 <code>/v1</code>；<br/>
+3. 检查当前本地网络是否能够连通该服务商地址。
+</details>
+
+<details>
+<summary><b>Q3: 填空题的答案会不会出现乱码或特殊符号导致失分？</b></summary>
+插件内置了针对学习通判卷系统的语义自愈与特殊字符清洗算法，会自动将大模型偶尔产生的希腊符号、公式符号等清洗为规范的标准汉字表述。
+</details>
 
 ---
 
