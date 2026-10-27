@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学习通 AI 助手</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- 头部 -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo">🎓</div>
+        <div class="brand-text">
+          <h1>学习通 AI 助手</h1>
+          <span class="sub">多大模型智能解题</span>
+        </div>
+      </div>
+      <a href="#" id="btnOpenOptions" class="settings-link" title="完整设置">⚙️</a>
+    </header>
+
+    <!-- 配置表单 -->
+    <main class="form-body">
+      <!-- 快速选择厂商 -->
+      <div class="form-item">
+        <label for="providerSelect">大模型服务商</label>
+        <select id="providerSelect" class="form-control">
+          <!-- 动态加载 -->
+        </select>
+      </div>
+
+      <!-- 选择具体模型版本 -->
+      <div class="form-item">
+        <label for="modelSelect">模型版本</label>
+        <div class="model-input-group">
+          <select id="modelSelect" class="form-control"></select>
+          <input type="text" id="customModelInput" class="form-control hidden" placeholder="输入自定义模型名">
+        </div>
+      </div>
+
+      <!-- API Key 输入 -->
+      <div class="form-item">
+        <div class="label-row">
+          <label for="apiKeyInput">API Key</label>
+          <a href="#" id="providerDocLink" target="_blank" class="doc-link">获取 Key ↗</a>
+        </div>
+        <div class="input-with-action">
+          <input type="password" id="apiKeyInput" class="form-control" placeholder="sk-...">
+          <button type="button" id="btnToggleKey" class="action-btn" title="显示/隐藏">👁️</button>
+        </div>
+      </div>
+
+      <!-- 快捷功能开关 -->
+      <div class="switch-row">
+        <span>输出解题解析 <small style="color: #94a3b8; font-size: 11px;">(关:纯答案省Token)</small></span>
+        <label class="switch">
+          <input type="checkbox" id="includeAnalysisSwitch">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="switch-row">
+        <span>自动辅助填选</span>
+        <label class="switch">
+          <input type="checkbox" id="autoFillSwitch">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <!-- 状态提示与连通性测试 -->
+      <div id="statusAlert" class="status-alert hidden"></div>
+
+      <!-- 核心行动区域：开始答题 -->
+      <div class="start-action-container">
+        <button type="button" id="btnStartAnswering" class="btn btn-start">
+          <span class="btn-icon">🚀</span>
+          <span id="startBtnText" class="btn-text">开始答题</span>
+        </button>
+        <div id="pageDetectStatus" class="page-detect-status">
+          <span id="detectDot" class="detect-dot"></span>
+          <span id="detectText">正在检测学习通做题页面...</span>
+        </div>
+      </div>
+
+      <!-- 底部动作按钮 -->
+      <div class="button-group">
+        <button type="button" id="btnTest" class="btn btn-outline">⚡ 测试连接</button>
+        <button type="button" id="btnSave" class="btn btn-primary">💾 保存配置</button>
+      </div>
+    </main>
+
+    <!-- 底部版权与免责声明 -->
+    <footer class="footer">
+      <span>遵循学术诚信 · 仅供辅导研究</span>
+    </footer>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

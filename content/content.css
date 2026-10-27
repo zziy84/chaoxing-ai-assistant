@@ -1,0 +1,5 @@
+/* 学习通 AI 助手 - 全局宿主轻量样式辅助 */
+#cx-ai-assistant-root {
+  display: block;
+  position: static;
+}

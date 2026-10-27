@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>设置 - 学习通 AI 答题与答疑助手</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- 侧边导航 -->
+    <aside class="sidebar-nav">
+      <div class="sidebar-header">
+        <span class="logo">🎓</span>
+        <div class="title-group">
+          <h2>学习通 AI 助手</h2>
+          <span class="badge">v1.0.0</span>
+        </div>
+      </div>
+      <nav class="nav-menu">
+        <a href="#section-model" class="nav-item active">🤖 模型与接口配置</a>
+        <a href="#section-safety" class="nav-item">🛡️ 风控与作答行为仿真</a>
+        <a href="#section-prompt" class="nav-item">📝 提示词设定</a>
+        <a href="#section-about" class="nav-item">ℹ️ 关于与学术规范</a>
+      </nav>
+    </aside>
+
+    <!-- 主设置内容区域 -->
+    <main class="main-content">
+      <div class="content-header">
+        <h1>插件高级设置</h1>
+        <p class="subtitle">配置大模型接入凭据、调整作答仿真参数与安全保护策略</p>
+      </div>
+
+      <!-- 模块 1: 模型与接口设置 -->
+      <section id="section-model" class="card-section">
+        <div class="section-title">
+          <h3>🤖 大模型服务商与 API 凭证</h3>
+          <span class="hint">支持任何兼容 OpenAI 接口协议的服务商</span>
+        </div>
+
+        <div class="form-grid">
+          <!-- 预设服务商 -->
+          <div class="form-group full-width">
+            <label>常用预设服务商快捷切换</label>
+            <div class="provider-chips" id="providerChipsContainer">
+              <!-- 动态芯片按钮 -->
+            </div>
+          </div>
+
+          <!-- Base URL -->
+          <div class="form-group full-width">
+            <label for="baseUrlInput">API Base URL</label>
+            <input type="text" id="baseUrlInput" class="form-input" placeholder="https://api.deepseek.com">
+            <span class="input-tip">服务商的根地址，后台会自动追加 /chat/completions</span>
+          </div>
+
+          <!-- API Key -->
+          <div class="form-group full-width">
+            <div class="label-with-link">
+              <label for="apiKeyInput">API Key (密钥)</label>
+              <a href="#" id="docLink" target="_blank" class="link-external">前往服务商控制台获取 Key ↗</a>
+            </div>
+            <div class="input-action-group">
+              <input type="password" id="apiKeyInput" class="form-input" placeholder="sk-...">
+              <button type="button" id="btnToggleKeyVisibility" class="btn-icon">👁️</button>
+            </div>
+            <span class="input-tip">密钥仅存储在您的浏览器本地 (chrome.storage.local)，绝不会上传到任何第三方中转服务。</span>
+          </div>
+
+          <!-- 模型名称 -->
+          <div class="form-group">
+            <label for="modelSelect">模型版本选择</label>
+            <select id="modelSelect" class="form-input"></select>
+          </div>
+
+          <div class="form-group" id="customModelGroup">
+            <label for="customModelInput">自定义模型名称</label>
+            <input type="text" id="customModelInput" class="form-input" placeholder="例如：deepseek-chat 或 qwen-max">
+          </div>
+
+          <!-- 批量并发数 -->
+          <div class="form-group">
+            <label for="concurrencyInput">批量解析并发数</label>
+            <input type="number" id="concurrencyInput" min="1" max="8" value="3" class="form-input">
+            <span class="input-tip">多通道并行解析答题，整卷速度成倍提升，建议设置 2 ~ 4（最高支持 8 并发）</span>
+          </div>
+        </div>
+
+        <!-- 连通性测试按钮与响应预览 -->
+        <div class="test-panel">
+          <div class="test-action-bar">
+            <button type="button" id="btnTestConn" class="btn btn-secondary">⚡ 测试接口连通性与延迟</button>
+            <div id="testStatusTag" class="status-tag hidden"></div>
+          </div>
+          <div id="testPreviewBox" class="test-preview hidden">
+            <div class="preview-header">模型回复预览:</div>
+            <pre id="testPreviewContent"></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- 模块 2: 风控与作答行为仿真 -->
+      <section id="section-safety" class="card-section">
+        <div class="section-title">
+          <h3>🛡️ 风控与作答行为仿真</h3>
+          <span class="hint">通过人类微操作时延降低异常行为风控特征</span>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group full-width switch-control-item">
+            <div>
+              <strong>生成答案解析与解题思路</strong>
+              <p class="input-tip">开启后提供详尽的解题逻辑与考点依据；关闭后模型仅输出精简答案，大幅节约 Token 消耗与网络等待时间。</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="includeAnalysisToggle">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="form-group full-width switch-control-item">
+            <div>
+              <strong>开启自动辅助填选</strong>
+              <p class="input-tip">AI 解析题目完成后，自动勾选推荐选项或填入填空题。</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="autoFillToggle">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="speedModeSelect">作答速度模式</label>
+            <select id="speedModeSelect" class="form-input">
+              <option value="turbo">🚀 极速模式 (每题约 0.3s~0.5s，推荐，零等待)</option>
+              <option value="normal">⚡ 匀速模式 (每题约 0.8s~1.5s，平稳均衡)</option>
+              <option value="safe">🛡️ 安全防风控 (每题约 2s~4s，真人思考仿真)</option>
+            </select>
+            <span class="input-tip">在悬浮窗工具栏也可以一键随时切换此模式。</span>
+          </div>
+
+          <div class="form-group">
+            <label for="delayMinInput">单题最小作答时延 (毫秒)</label>
+            <input type="number" id="delayMinInput" min="500" max="10000" step="100" value="1500" class="form-input">
+            <span class="input-tip">模拟人类读题与思考所需的最短时间</span>
+          </div>
+
+          <div class="form-group">
+            <label for="delayMaxInput">单题最大作答时延 (毫秒)</label>
+            <input type="number" id="delayMaxInput" min="1000" max="20000" step="100" value="3500" class="form-input">
+            <span class="input-tip">在区间内随机波动，打乱行为时间特征</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 模块 3: 提示词设定 -->
+      <section id="section-prompt" class="card-section">
+        <div class="section-title">
+          <h3>📝 提示词规范 (System Prompt)</h3>
+          <span class="hint">规范大模型的 JSON 输出结构与严谨程度</span>
+        </div>
+
+        <div class="form-group full-width">
+          <textarea id="systemPromptText" class="form-textarea" rows="8" readonly></textarea>
+          <span class="input-tip">系统内置了标准结构化 JSON 约束规则，确保 100% 自动化解析。</span>
+        </div>
+      </section>
+
+      <!-- 模块 4: 关于与学术规范 -->
+      <section id="section-about" class="card-section">
+        <div class="section-title">
+          <h3>ℹ️ 关于与合规声明</h3>
+        </div>
+        <div class="about-box">
+          <p><strong>学术诚信与合法合规提醒：</strong></p>
+          <p>1. 本扩展仅供个人技术研究、编程学习与做题思路辅助使用，坚决杜绝用于任何正式考试作弊或商业违规刷课行为。</p>
+          <p>2. 请严格遵守所在学校或教学机构的学术诚信准则与平台《用户服务协议》。因不当使用导致的账号限制或纪律后果由使用者自行承担。</p>
+          <p>3. 插件不设立任何外部中心化服务器，您的所有 API Key 与学习数据仅在本地浏览器与所选模型厂商官方服务器间加密传输。</p>
+        </div>
+      </section>
+
+      <!-- 浮动操作栏 -->
+      <div class="bottom-bar">
+        <button type="button" id="btnReloadExtension" class="btn btn-secondary" style="margin-right: auto;">🔄 热重载扩展代码</button>
+        <button type="button" id="btnResetDefaults" class="btn btn-danger-outline">恢复默认配置</button>
+        <button type="button" id="btnSaveOptions" class="btn btn-primary-large">💾 保存全部设置</button>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+{
+  "manifest_version": 3,
+  "name": "学习通 AI 答题与答疑助手",
+  "version": "1.0.0",
+  "description": "基于自定义大模型（DeepSeek、通义千问、Kimi、OpenAI 等）的学习通题目智能解析与辅助答题插件",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://*.chaoxing.com/*",
+    "*://*.xuexitong.com/*",
+    "*://*.edu.cn/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "学习通 AI 助手",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.chaoxing.com/*",
+        "*://*.xuexitong.com/*",
+        "*://*.edu.cn/*"
+      ],
+      "js": [
+        "content/page-bridge.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*.chaoxing.com/*",
+        "*://*.xuexitong.com/*",
+        "*://*.edu.cn/*"
+      ],
+      "js": [
+        "content/content.js"
+      ],
+      "css": [
+        "content/content.css"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/page-bridge.js",
+        "content/parser.js",
+        "content/ui-panel.js",
+        "content/simulator.js",
+        "shared/constants.js",
+        "shared/storage.js",
+        "shared/prompt.js",
+        "shared/json-repair.js"
+      ],
+      "matches": [
+        "*://*.chaoxing.com/*",
+        "*://*.xuexitong.com/*",
+        "*://*.edu.cn/*"
+      ]
+    }
+  ]
+}
